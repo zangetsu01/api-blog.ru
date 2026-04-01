@@ -46,6 +46,8 @@ switch ($method) {
         break;
         case 'DELETE':
             if ($type === 'posts'){
+                if (isset($id)){
             deletePost($pdo, $id);
+                }
         }
 }

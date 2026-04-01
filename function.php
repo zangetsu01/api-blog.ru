@@ -42,18 +42,6 @@ function addPost($pdo, $data)
     echo json_encode($response);
 
 }
-function updatePost($pdo, $id, $data){
-    $sql = "UPDATE `posts` SET `title` = :title, `body` = :body WHERE `id` = :id";
-    $stmt= $pdo->prepare($sql);
-    $data['id'] = $id;
-    $stmt->execute($data);
-    http_response_code(200);
-    $response = [
-        "status" => true,
-        "post_id" => $id
-    ];
-    echo json_encode($response);
-}
 
 function deletePost($pdo, $id) 
 {
@@ -65,6 +53,17 @@ function deletePost($pdo, $id)
     $response = [
         'status' => true,
         "mesend" => 'delete!'
+    ];
+    echo json_encode($response);
+}
+
+function updatePost($pdo, $id, $data) {
+    $stmt = $pdo -> prepare("UPDATE `posts` SET title = :title, body = :body WHERE `id` = :id");
+    $stmt -> execute(['title' => $data['title'], 'body' => $data['body'], 'id' => $id]);
+    http_response_code(200);
+    $response = [
+        'status' => true,
+        'message' => 'Modified!'
     ];
     echo json_encode($response);
 }
